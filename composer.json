@@ -1,0 +1,17 @@
+{
+    "name": "bamarni/symfony-console-autocomplete",
+    "description": "Bash autocompletion for Symfony Console based scripts",
+    "require": {
+        "symfony/console": "2.*",
+        "symfony/process": "2.*"
+    },
+    "authors": [
+        {
+            "name": "Bilal Amarni",
+            "email": "bilal.amarni@gmail.com"
+        }
+    ],
+    "config": {
+        "bin-dir": "bin"
+    }
+}

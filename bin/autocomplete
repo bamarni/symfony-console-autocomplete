@@ -1,0 +1,94 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__.'/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
+
+$console = new Application();
+$console
+    ->register('dump')
+    ->setDefinition(array(
+        new InputArgument('script', InputArgument::REQUIRED, null),
+        new InputArgument('path', InputArgument::OPTIONAL, null),
+    ))
+    ->setDescription('Dumps bash autocompletion for any executable based on a Symfony Console Application.')
+    ->setCode(function (InputInterface $input, OutputInterface $output) {
+        $dump = array();
+        $script = $input->getArgument('script');
+
+        // find all commands
+        $process = new Process($script.' list --raw | sed -E "s/([^ ]+) .*/\1/"');
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new RuntimeException($process->getErrorOutput());
+        }
+        $commands = explode("\n", $process->getOutput());
+        array_pop($commands);
+
+        foreach ($commands as $command) {
+            // get command help as xml
+            $process = new Process($script.' help '.$command.' --xml');
+            $process->run();
+            if (!$process->isSuccessful()) {
+                throw new RuntimeException($process->getErrorOutput());
+            }
+            $xmlHelp = $process->getOutput();
+
+            // extract options from xml help
+            $options = array();
+            $xml = simplexml_load_string($xmlHelp);
+            foreach ($xml->xpath('/command/options/option') as $option) {
+                $options[] = (string) $option['name'];
+            }
+
+            $dump[$command] = $options;
+        }
+
+        // extract options shared between all commands
+        $commonOptions = array();
+        foreach ($dump as $command => $options) {
+            if (empty($commonOptions)) {
+                $commonOptions = $options;
+            }
+
+            $commonOptions = array_intersect($commonOptions, $options);
+        }
+
+        $dump = array_map(function($options) use ($commonOptions) {
+            return array_diff($options, $commonOptions);
+        }, $dump);
+
+        // generate the switch content
+        $switchCase = <<<SWITCHCASE
+    %%COMMAND%%)
+            opts="\${opts} %%COMMAND_OPTIONS%%"
+            ;;
+SWITCHCASE;
+        $switchContent = '';
+        foreach ($dump as $command => $options) {
+            if (empty($options)) {
+                continue;
+            }
+
+            $switchContent .= str_replace(
+                array('%%COMMAND%%', '%%COMMAND_OPTIONS%%'),
+                array($command, join(' ', $options)),
+                $switchCase
+            );
+        }
+
+        // dump
+        $template = file_get_contents(__DiR__.'/../template');
+
+        echo str_replace(
+            array('%%SCRIPT%%', '%%COMMANDS%%', '%%SHARED_OPTIONS%%', '%%SWITCH_CONTENT%%'),
+            array($script, join(' ', $commands), join(' ', $commonOptions), $switchContent),
+            $template
+        );
+});
+$console->run();

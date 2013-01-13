@@ -1,0 +1,25 @@
+#!/bin/sh
+_%%SCRIPT%%()
+{
+    local cur prev coms opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    coms="%%COMMANDS%%"
+    opts="%%SHARED_OPTIONS%%"
+
+    if [[ ${COMP_CWORD} = 1 ]] ; then
+        COMPREPLY=($(compgen -W "${coms}" -- ${cur}))
+        return 0
+    fi
+
+    case "${prev}" in
+        %%SWITCH_CONTENT%%
+        esac
+
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+    return 0;
+}
+
+complete -o default -F _%%SCRIPT%% %%SCRIPT%%
+COMP_WORDBREAKS=${COMP_WORDBREAKS//:}
