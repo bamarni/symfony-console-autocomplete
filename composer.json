@@ -1,6 +1,7 @@
 {
     "name": "bamarni/symfony-console-autocomplete",
     "description": "Bash autocompletion for Symfony Console based scripts",
+    "license": "MIT",
     "require": {
         "symfony/console": "2.*",
         "symfony/process": "2.*"
@@ -11,7 +12,5 @@
             "email": "bilal.amarni@gmail.com"
         }
     ],
-    "config": {
-        "bin-dir": "bin"
-    }
+    "bin": [ "bin/autocomplete" ]
 }
