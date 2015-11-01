@@ -1,9 +1,9 @@
 #!/bin/sh
 _%%SCRIPT%%()
 {
-    local cur prev coms opts
+    local cur words coms opts
     COMPREPLY=()
-    _get_comp_words_by_ref -n : cur prev cword
+    _get_comp_words_by_ref -n : cur words cword
     coms="%%COMMANDS%%"
     opts="%%SHARED_OPTIONS%%"
 
@@ -13,7 +13,7 @@ _%%SCRIPT%%()
         return 0
     fi
 
-    case "${prev}" in
+    case "${words[1]}" in
         %%SWITCH_CONTENT%%
         esac
 
