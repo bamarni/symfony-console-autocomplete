@@ -10,7 +10,7 @@ Install the tool globally with Composer :
 
     composer global require bamarni/symfony-console-autocomplete
 
-## Usage example (global) : Composer completion
+## Usage example : Composer completion
 
 If you want to generate autocompletion for [Composer](http://getcomposer.org/)
 commands and options, you can run the following command :
@@ -28,7 +28,7 @@ location depending on your OS / setup. Here are a few examples :
 
     symfony-autocomplete composer > $(brew --prefix)/etc/bash_completion.d/composer
 
-## Usage example (local) : Symfony framework completion
+## Usage example : Symfony framework completion
 
 Symfony framework console is not a global tool, each Symfony project will likely have its own
 variety of different commands. As such, the completion script shouldn't be installed globally.
@@ -37,12 +37,15 @@ Here is a working setup example for Symfony 3, it adds a script in `composer.jso
 
     "scripts": {
         "...",
+        "post-update-cmd": [
+            "...",
+            "@autocomplete"
+        ],
         "autocomplete": "symfony-autocomplete bin/console --script-options=\"--no-debug\" > .autocomplete.bash"
     },
 
-The completion script can then be generated with `composer autocomplete`.
-
-*To have it generated automatically, you could also put it under 'the post-update-cmd' scripts section.*
+The completion script can then be generated with `composer autocomplete`. It will also be regenerated automatically
+when vendors are updated.
 
 Finally, run this shell command to source the generated script : `. .autocomplete.bash`.
 
