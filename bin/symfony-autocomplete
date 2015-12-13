@@ -9,7 +9,20 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-require_once __DIR__.'/../vendor/autoload.php';
+if (is_file($autoload = getcwd() . '/vendor/autoload.php')) {
+    require $autoload;
+} elseif (is_file($autoload = getcwd() . '/../../autoload.php')) {
+    require $autoload;
+}
+
+if (is_file($autoload = __DIR__ . '/../vendor/autoload.php')) {
+    require($autoload);
+} elseif (is_file($autoload = __DIR__ . '/../../../autoload.php')) {
+    require($autoload);
+} else {
+    fwrite(STDERR, "Couln't find autoload");
+    exit(1);
+}
 
 class Application extends BaseApplication
 {
