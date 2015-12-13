@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 _%%SCRIPT%%()
 {
     local cur words coms opts

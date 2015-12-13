@@ -1,42 +1,74 @@
 #!/usr/bin/env php
 <?php
 
-if ( file_exists(__DIR__.'/../vendor/autoload.php')) {
-    require_once __DIR__.'/../vendor/autoload.php';
-} else {
-    require_once __DIR__.'/../../../autoload.php';
-}
-
-use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Application as BaseApplication;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-$console = new Application();
-$console
-    ->register('dump')
+require_once __DIR__.'/../vendor/autoload.php';
+
+class Application extends BaseApplication
+{
+    private $command;
+
+    public function __construct(Command $command)
+    {
+        $this->command = $command;
+
+        parent::__construct();
+    }
+
+    protected function getCommandName(InputInterface $input)
+    {
+        return $this->command->getName();
+    }
+
+    protected function getDefaultCommands()
+    {
+        $defaultCommands = parent::getDefaultCommands();
+        $defaultCommands[] = $this->command;
+
+        return $defaultCommands;
+    }
+
+    public function getDefinition()
+    {
+        $inputDefinition = parent::getDefinition();
+        $inputDefinition->setArguments();
+
+        return $inputDefinition;
+    }
+}
+
+$command = new Command('dump');
+$command
     ->setDefinition(array(
-        new InputArgument('script', InputArgument::REQUIRED, null),
-        new InputArgument('path', InputArgument::OPTIONAL, null),
+        new InputArgument('script', InputArgument::REQUIRED, "The script to generate completion for."),
+        new InputOption('script-options', null, InputOption::VALUE_REQUIRED, "Options to be passed to the script."),
     ))
     ->setDescription('Dumps bash autocompletion for any executable based on a Symfony Console Application.')
     ->setCode(function (InputInterface $input, OutputInterface $output) {
         $dump = array();
         $script = $input->getArgument('script');
+        $scriptOptions = $input->getOption('script-options');
 
         // find all commands
-        $process = new Process($script.' list --raw | sed -E "s/([^ ]+) .*/\1/"');
+        $process = new Process($script.' '.$scriptOptions.' list --raw | sed -E "s/([^ ]+) .*/\1/"');
         $process->run();
         if (!$process->isSuccessful()) {
             throw new RuntimeException($process->getErrorOutput());
         }
+
         $commands = explode("\n", $process->getOutput());
         array_pop($commands);
 
         foreach ($commands as $command) {
             // get command help as xml
-            $process = new Process($script.' help '.$command.' --xml');
+            $process = new Process($script.' '.$scriptOptions.' help --format=xml '.$command);
             $process->run();
             if (!$process->isSuccessful()) {
                 throw new RuntimeException($process->getErrorOutput());
@@ -87,12 +119,15 @@ SWITCHCASE;
         }
 
         // dump
-        $template = file_get_contents(__DiR__.'/../template');
+        $template = file_get_contents(__DIR__.'/../templates/bash.tpl');
+        $script = explode('/', $script);
 
         echo str_replace(
             array('%%SCRIPT%%', '%%COMMANDS%%', '%%SHARED_OPTIONS%%', '%%SWITCH_CONTENT%%'),
-            array($script, join(' ', $commands), join(' ', $commonOptions), $switchContent),
+            array(array_pop($script), join(' ', $commands), join(' ', $commonOptions), $switchContent),
             $template
         );
 });
+
+$console = new Application($command);
 $console->run();

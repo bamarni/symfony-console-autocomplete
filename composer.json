@@ -1,10 +1,10 @@
 {
     "name": "bamarni/symfony-console-autocomplete",
-    "description": "Bash autocompletion for Symfony Console based scripts",
+    "description": "Bash completion for Symfony Console based scripts",
     "license": "MIT",
     "require": {
-        "symfony/console": "2.*",
-        "symfony/process": "2.*"
+        "symfony/console": "^2.5|3.*",
+        "symfony/process": "2.*|3.*"
     },
     "authors": [
         {
@@ -12,5 +12,5 @@
             "email": "bilal.amarni@gmail.com"
         }
     ],
-    "bin": [ "bin/autocomplete" ]
+    "bin": [ "bin/symfony-autocomplete" ]
 }
