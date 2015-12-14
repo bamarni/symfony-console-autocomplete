@@ -58,13 +58,35 @@ class Application extends BaseApplication
 $command = new Command('dump');
 $command
     ->setDefinition(array(
-        new InputArgument('script', InputArgument::REQUIRED, "The script to generate completion for."),
+        new InputArgument('script', InputArgument::OPTIONAL, "The script to generate completion for."),
         new InputOption('script-options', null, InputOption::VALUE_REQUIRED, "Options to be passed to the script."),
     ))
     ->setDescription('Dumps bash autocompletion for any executable based on a Symfony Console Application.')
     ->setCode(function (InputInterface $input, OutputInterface $output) {
         $dump = array();
         $script = $input->getArgument('script');
+
+        if (!$script) {
+            $tools = array(
+                'console',
+                'composer',
+                'php-cs-fixer',
+                'phpspec',
+                'behat',
+            );
+
+            $tools = array_map(function($v) { return 'complete -o default -F _symfony '.$v; }, $tools);
+
+            $template = file_get_contents(__DIR__.'/../templates/default.bash.tpl');
+            $output->write(str_replace(
+                array('%%TOOLS%%'),
+                array(implode("\n", $tools)),
+                $template
+            ));
+
+            return;
+        }
+
         $scriptOptions = $input->getOption('script-options');
 
         // find all commands
@@ -130,15 +152,16 @@ SWITCHCASE;
         }
 
         // dump
-        $template = file_get_contents(__DIR__.'/../templates/bash.tpl');
+        $template = file_get_contents(__DIR__.'/../templates/cached.bash.tpl');
         $script = explode('/', $script);
 
-        echo str_replace(
+        $output->write(str_replace(
             array('%%SCRIPT%%', '%%COMMANDS%%', '%%SHARED_OPTIONS%%', '%%SWITCH_CONTENT%%'),
             array(array_pop($script), join(' ', $commands), join(' ', $commonOptions), $switchContent),
             $template
-        );
-});
+        ));
+    })
+;
 
 $console = new Application($command);
 $console->run();

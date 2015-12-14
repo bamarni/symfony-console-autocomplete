@@ -10,15 +10,28 @@ Install the tool globally with Composer :
 
     composer global require bamarni/symfony-console-autocomplete
 
-## Usage example : Composer completion
+## Simple usage
 
-If you want to generate autocompletion for [Composer](http://getcomposer.org/)
-commands and options, you can run the following command :
+The following configuration works out of the box for Symfony, Composer, PHPSpec, etc.
+
+Just add the following line to your `~/.bash_profile` :
+
+```
+eval "$(symfony-autocomplete)"
+```
+
+Logout / login from your terminal and you're ready to go!
+
+## Specific usage
+
+The simple usage needs to hook on the fly to inspect the tool commands / options,
+it should be fast enough but if for some reason you want to dump a static version,
+you can pass the tool name as an argument :
 
     symfony-autocomplete composer
 
-It will print the completion script to stdout, the output should be saved at a specific
-location depending on your OS / setup. Here are a few examples :
+This will print the completion script for Composer to stdout. The output should be saved
+at a specific location depending on your OS / setup. Here are a few examples :
 
 **Ubuntu / Debian**
 
@@ -27,36 +40,6 @@ location depending on your OS / setup. Here are a few examples :
 **Mac OSX (with Homebrew "bash-completion")**
 
     symfony-autocomplete composer > $(brew --prefix)/etc/bash_completion.d/composer
-
-## Usage example : Symfony framework completion
-
-Symfony framework console is not a global tool, each Symfony project will likely have its own
-variety of different commands. As such, the completion script shouldn't be installed globally.
-
-Here is a working setup example for Symfony 3, it adds a script in `composer.json` :
-
-    "scripts": {
-        "...",
-        "post-update-cmd": [
-            "...",
-            "@autocomplete"
-        ],
-        "autocomplete": "symfony-autocomplete bin/console --script-options=\"--no-debug\" > .autocomplete.bash"
-    },
-
-The completion script can then be generated with `composer autocomplete`. It will also be regenerated automatically
-when vendors are updated.
-
-Finally, run this shell command to source the generated script : `. .autocomplete.bash`.
-
-### Tip
-
-Instead of sourcing the generated script manually, you could use [direnv](http://direnv.net/),
-with the following `.envrc` at the root of your Symfony project :
-
-    [[ -f autocomplete.bash ]] && source .autocomplete.bash
-
-Now, each time you'll enter into your Symfony project, completion will be loaded automatically.
 
 ## Supported tools
 

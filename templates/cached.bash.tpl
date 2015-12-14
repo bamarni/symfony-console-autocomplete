@@ -10,6 +10,7 @@ _%%SCRIPT%%()
     if [[ $cword = 1 ]] ; then
         COMPREPLY=($(compgen -W "${coms}" -- ${cur}))
         __ltrim_colon_completions "$cur"
+
         return 0
     fi
 
@@ -18,6 +19,7 @@ _%%SCRIPT%%()
         esac
 
     COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+
     return 0;
 }
 
