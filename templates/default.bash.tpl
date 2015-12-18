@@ -2,21 +2,23 @@
 
 _symfony()
 {
-    local cur prev script
+    local cur prev script command
     COMPREPLY=()
     _get_comp_words_by_ref -n : cur prev words
 
-    if [[ ${cur} == -* ]] ; then
+    for word in ${words[@]}
+    do
+        if [[ $word != -* && ${words[0]} != $word ]]; then
+            command=$word
+            break
+        fi
+    done
+
+    if [[ ${cur} == --* ]] ; then
         PHP=$(cat <<'HEREDOC'
 array_shift($argv);
 $script = array_shift($argv);
-$command = '';
-foreach ($argv as $v) {
-    if (0 !== strpos($v, '-')) {
-        $command = $v;
-        break;
-    }
-}
+$command = array_shift($argv);
 
 $xmlHelp = shell_exec($script.' help --format=xml '.$command.' 2>/dev/null');
 $options = array();
@@ -31,17 +33,21 @@ echo implode(' ', $options);
 HEREDOC
 )
 
-        args=$(printf "%s " "${words[@]}")
-        options=$($(which php) -r "$PHP" ${args});
+        options=$($(which php) -r "$PHP" ${words[0]} "${command}");
         COMPREPLY=($(compgen -W "${options}" -- ${cur}))
+        __ltrim_colon_completions "$cur"
 
         return 0
     fi
 
-    commands=$(${words[0]} list --raw 2>/dev/null | sed -E 's/(([^ ]+ )).*/\1/')
-    COMPREPLY=($(compgen -W "${commands}" -- ${cur}))
+    if [[ $cur == $command ]]; then
+        commands=$(${words[0]} list --raw 2>/dev/null | sed -E 's/(([^ ]+ )).*/\1/')
+        COMPREPLY=($(compgen -W "${commands}" -- ${cur}))
+        __ltrim_colon_completions "$cur"
 
-    return 0;
+        return 0;
+    fi
+
 }
 
 %%TOOLS%%
