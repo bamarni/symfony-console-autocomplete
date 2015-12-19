@@ -60,6 +60,7 @@ $command
     ->setDefinition(array(
         new InputArgument('script', InputArgument::OPTIONAL, "The script to generate completion for."),
         new InputOption('script-options', null, InputOption::VALUE_REQUIRED, "Options to be passed to the script."),
+        new InputOption('aliases', null, InputOption::VALUE_REQUIRED),
     ))
     ->setDescription('Dumps bash autocompletion for any executable based on a Symfony Console Application.')
     ->setCode(function (InputInterface $input, OutputInterface $output) {
@@ -74,6 +75,11 @@ $command
                 'phpspec',
                 'behat',
             );
+
+            if ($extraTools = $input->getOption('aliases')) {
+                $extraTools = array_filter(preg_split('/\s+/', $extraTools));
+                $tools = array_unique(array_merge($tools, $extraTools));
+            }
 
             $tools = array_map(function($v) { return 'complete -o default -F _symfony '.$v; }, $tools);
 
