@@ -154,7 +154,7 @@ SWITCHCASE;
                 array('%%COMMAND%%', '%%COMMAND_OPTIONS%%'),
                 array($command, join(' ', $options)),
                 $switchCase
-            );
+            )."\n        ";
         }
 
         // dump
