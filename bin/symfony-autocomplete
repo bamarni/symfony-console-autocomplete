@@ -60,30 +60,45 @@ $command
     ->setDefinition(array(
         new InputArgument('script', InputArgument::OPTIONAL, "The script to generate completion for."),
         new InputOption('script-options', null, InputOption::VALUE_REQUIRED, "Options to be passed to the script."),
-        new InputOption('aliases', null, InputOption::VALUE_REQUIRED),
+        new InputOption('aliases', null, InputOption::VALUE_REQUIRED, "Extra aliases to be used."),
+        new InputOption('disable-default-tools', null, InputOption::VALUE_NONE),
+        new InputOption('shell', null, InputOption::VALUE_REQUIRED, 'Shell type ("bash" or "zsh")', basename($_SERVER['SHELL'])),
     ))
     ->setDescription('Dumps bash autocompletion for any executable based on a Symfony Console Application.')
     ->setCode(function (InputInterface $input, OutputInterface $output) {
         $dump = array();
+        $shell = $input->getOption('shell');
         $script = $input->getArgument('script');
 
         if (!$script) {
-            $tools = array(
-                'console',
-                'composer',
-                'php-cs-fixer',
-                'phpspec',
-                'behat',
-            );
+            if ($input->getOption('disable-default-tools')) {
+                $tools = array();
+            } else {
+                $tools = array(
+                    'console',
+                    'composer',
+                    'php-cs-fixer',
+                    'phpspec',
+                    'behat',
+                );
+            }
 
             if ($extraTools = $input->getOption('aliases')) {
                 $extraTools = array_filter(preg_split('/\s+/', $extraTools));
                 $tools = array_unique(array_merge($tools, $extraTools));
             }
 
-            $tools = array_map(function($v) { return 'complete -o default -F _symfony '.$v; }, $tools);
+            if ('zsh' == $shell) {
+                $tools = array_map(function ($v) {
+                    return 'compdef _symfony ' . $v;
+                }, $tools);
+            } else {
+                $tools = array_map(function ($v) {
+                    return 'complete -o default -F _symfony ' . $v;
+                }, $tools);
+            }
 
-            $template = file_get_contents(__DIR__.'/../templates/default.bash.tpl');
+            $template = file_get_contents(__DIR__.'/../templates/default.'.$shell.'.tpl');
             $output->write(str_replace(
                 array('%%TOOLS%%'),
                 array(implode("\n", $tools)),
