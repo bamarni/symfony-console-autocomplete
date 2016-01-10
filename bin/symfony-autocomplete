@@ -60,7 +60,7 @@ $command
     ->setDefinition(array(
         new InputArgument('script', InputArgument::OPTIONAL, "The script to generate completion for."),
         new InputOption('script-options', null, InputOption::VALUE_REQUIRED, "Options to be passed to the script."),
-        new InputOption('aliases', null, InputOption::VALUE_REQUIRED, "Extra aliases to be used."),
+        new InputOption('aliases', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, "Extra aliases to be used."),
         new InputOption('disable-default-tools', null, InputOption::VALUE_NONE),
         new InputOption('shell', null, InputOption::VALUE_REQUIRED, 'Shell type ("bash" or "zsh")', basename($_SERVER['SHELL'])),
     ))
@@ -84,7 +84,7 @@ $command
             }
 
             if ($extraTools = $input->getOption('aliases')) {
-                $extraTools = array_filter(preg_split('/\s+/', $extraTools));
+                $extraTools = array_filter(preg_split('/\s+/', implode(' ', $extraTools)));
                 $tools = array_unique(array_merge($tools, $extraTools));
             }
 
