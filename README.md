@@ -1,8 +1,10 @@
 # Symfony console autocomplete
 
-Enables bash autocompletion for tools based on the
-[Symfony2 Console](http://symfony.com/doc/master/components/console/introduction.html)
-component.
+Enables shell autocompletion for tools based on the
+[Symfony2 Console](http://symfony.com/doc/master/components/console/introduction.html) 
+(Symfony framework, Composer, PHPSpec, Behat, etc.)
+
+<img src="https://cloud.githubusercontent.com/assets/1205386/12221229/ecbda408-b791-11e5-8b2f-524763250a53.png" />
 
 ## Installation
 
@@ -10,23 +12,20 @@ Install the tool globally with Composer :
 
     composer global require bamarni/symfony-console-autocomplete
 
-## Simple usage
+## Quick setup (recommended)
 
-The following configuration works out of the box for Symfony, Composer, PHPSpec, etc.
-
-Just add the following line to your `~/.bash_profile` :
+Add the following line at the end of your shell configuration file (`~/.bash_profile` or `~/.zshrc`) :
 
 ```
 eval "$(symfony-autocomplete)"
 ```
 
-Logout / login from your terminal and you're ready to go!
+Close / re-open your terminal window and you're ready to go!
 
-## Specific usage
+## Static setup
 
-The simple usage needs to hook on the fly to inspect the tool commands / options,
-it should be fast enough but if for some reason you want to dump a static version,
-you can pass the tool name as an argument :
+If you don't like all the magic from the quick setup and want to go with a more standard way,
+you can dump a static completion file for a given tool :
 
     symfony-autocomplete composer
 
