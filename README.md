@@ -15,7 +15,7 @@ See https://getcomposer.org/doc/03-cli.md#global for instructions on how todo th
 
 Install the tool globally with Composer :
 
-    composer global require bamarni/symfony-console-autocompleet
+    composer global require bamarni/symfony-console-autocomplete
 
 ## Quick setup (recommended)
 
