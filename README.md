@@ -6,11 +6,16 @@ Enables shell autocompletion for tools based on the
 
 <img src="https://cloud.githubusercontent.com/assets/1205386/12221229/ecbda408-b791-11e5-8b2f-524763250a53.png" />
 
+## Prerequisites
+
+Make sure the global composer project is configured properly with your shell.
+See https://getcomposer.org/doc/03-cli.md#global for instructions on how todo that.
+
 ## Installation
 
 Install the tool globally with Composer :
 
-    composer global require bamarni/symfony-console-autocomplete
+    composer global require bamarni/symfony-console-autocompleet
 
 ## Quick setup (recommended)
 
