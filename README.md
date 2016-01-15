@@ -27,7 +27,7 @@ eval "$(symfony-autocomplete)"
 
 Close / re-open your terminal window and you're ready to go!
 
-## Static setup
+## Static setup (bash only for the moment)
 
 If you don't like all the magic from the quick setup and want to go with a more standard way,
 you can dump a static completion file for a given tool :
