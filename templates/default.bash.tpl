@@ -2,10 +2,18 @@
 
 _symfony()
 {
-    local cur prev script com opts
+    local cur script com opts
     COMPREPLY=()
-    _get_comp_words_by_ref -n : cur prev words
+    _get_comp_words_by_ref -n : cur words
 
+    # for an alias, get the real script behind it
+    if [[ $(type -t ${words[0]}) == "alias" ]]; then
+        script=$(alias ${words[0]} | sed -E "s/alias ${words[0]}='(.*)'/\1/")
+    else
+        script=${words[0]}
+    fi
+
+    # lookup for command
     for word in ${words[@]:1}; do
         if [[ $word != -* ]]; then
             com=$word
@@ -13,10 +21,11 @@ _symfony()
         fi
     done
 
+    # completing for an option
     if [[ ${cur} == --* ]] ; then
-        opts=${words[0]}
+        opts=$script
         [[ -n $com ]] && opts=$opts" -h "$com
-        opts=$($opts --no-ansi 2>/dev/null | sed -n '/Options/,/^$/p' | sed -e '1d;$d' | sed -En 's/.*(-(-[[:alnum:]]+){1,}).*/\1/p'; exit ${PIPESTATUS[0]});
+        opts=$($opts --no-ansi 2>/dev/null | sed -n '/Options/,/^$/p' | sed -e '1d;$d' | sed 's/[^--]*\(--.*\)/\1/' | sed -En 's/[^ ]*(-(-[[:alnum:]]+){1,}).*/\1/p' | awk '{$1=$1};1'; exit ${PIPESTATUS[0]});
         [[ $? -eq 0 ]] || return 0;
         COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
         __ltrim_colon_completions "$cur"
@@ -24,8 +33,9 @@ _symfony()
         return 0
     fi
 
+    # completing for a command
     if [[ $cur == $com ]]; then
-        coms=$(${words[0]} list --raw 2>/dev/null | sed -E 's/(([^ ]+ )).*/\1/'; exit ${PIPESTATUS[0]})
+        coms=$($script list --raw 2>/dev/null | sed -E 's/(([^ ]+ )).*/\1/'; exit ${PIPESTATUS[0]})
         [[ $? -eq 0 ]] || return 0;
         COMPREPLY=($(compgen -W "${coms}" -- ${cur}))
         __ltrim_colon_completions "$cur"

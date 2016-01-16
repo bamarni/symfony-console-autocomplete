@@ -21,13 +21,20 @@ Install the tool globally with Composer :
 
 Add the following line at the end of your shell configuration file (`~/.bash_profile` or `~/.zshrc`) :
 
-```
-eval "$(symfony-autocomplete)"
-```
+    eval "$(symfony-autocomplete)"
 
 Close / re-open your terminal window and you're ready to go!
 
-## Static setup (bash only for the moment)
+## Tips for Bash users
+
+### Alias support
+
+By default, completion for your aliases won't be enabled. If you're using aliases
+(eg. "c" for "composer", "pspec" for "phpspec", etc.), you have to pass them explicitly :
+
+    symfony-autocomplete --aliases=c --aliases=pspec
+
+### Static setup
 
 If you don't like all the magic from the quick setup and want to go with a more standard way,
 you can dump a static completion file for a given tool :
@@ -37,12 +44,10 @@ you can dump a static completion file for a given tool :
 This will print the completion script for Composer to stdout. The output should be saved
 at a specific location depending on your OS / setup. Here are a few examples :
 
-**Ubuntu / Debian**
-
+    # Ubuntu / Debian
     symfony-autocomplete composer | sudo tee /etc/bash_completion.d/composer
 
-**Mac OSX (with Homebrew "bash-completion")**
-
+    # Mac OSX (with Homebrew "bash-completion")
     symfony-autocomplete composer > $(brew --prefix)/etc/bash_completion.d/composer
 
 ## Supported tools
