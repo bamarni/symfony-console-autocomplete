@@ -169,10 +169,21 @@ SWITCHCASE;
         // dump
         $template = file_get_contents(__DIR__.'/templates/cached.bash.tpl');
         $script = explode('/', $script);
+        $script = array_pop($script);
+        $tools = array($script);
+
+        if ($extraTools = $input->getOption('aliases')) {
+            $extraTools = array_filter(preg_split('/\s+/', implode(' ', $extraTools)));
+            $tools = array_unique(array_merge($tools, $extraTools));
+        }
+
+        $tools = array_map(function ($v) use ($script) {
+            return 'complete -o default -F _'.$script.' '.$v;
+        }, $tools);
 
         $output->write(str_replace(
-            array('%%SCRIPT%%', '%%COMMANDS%%', '%%SHARED_OPTIONS%%', '%%SWITCH_CONTENT%%'),
-            array(array_pop($script), join(' ', $commands), join(' ', $commonOptions), $switchContent),
+            array('%%SCRIPT%%', '%%COMMANDS%%', '%%SHARED_OPTIONS%%', '%%SWITCH_CONTENT%%', '%%TOOLS%%'),
+            array($script, join(' ', $commands), join(' ', $commonOptions), $switchContent, implode("\n", $tools)),
             $template
         ));
     })
