@@ -164,6 +164,7 @@ SWITCHCASE;
                 $switchCase
             )."\n        ";
         }
+        $switchContent = rtrim($switchContent, ' ');
 
         // dump
         $template = file_get_contents(__DIR__.'/templates/cached.bash.tpl');
