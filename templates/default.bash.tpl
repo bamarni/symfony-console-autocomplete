@@ -35,7 +35,7 @@ _symfony()
 
     # completing for a command
     if [[ $cur == $com ]]; then
-        coms=$($script list --raw 2>/dev/null | sed -E 's/(([^ ]+ )).*/\1/'; exit ${PIPESTATUS[0]})
+        coms=$($script list --raw 2>/dev/null | awk '{print $1}'; exit ${PIPESTATUS[0]})
         [[ $? -eq 0 ]] || return 0;
         COMPREPLY=($(compgen -W "${coms}" -- ${cur}))
         __ltrim_colon_completions "$cur"
