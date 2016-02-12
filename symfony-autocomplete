@@ -48,6 +48,16 @@ class Application extends BaseApplication
     }
 }
 
+function zsh_describe($value, $description = null)
+{
+    $value = '"'.str_replace(':', '\\:', $value);
+    if (!empty($description)) {
+        $value .= ':'.escapeshellcmd($description);
+    }
+
+    return $value.'"';
+}
+
 $command = new Command('dump');
 $command
     ->setDefinition(array(
@@ -59,10 +69,20 @@ $command
     ))
     ->setDescription('Dumps bash autocompletion for any executable based on a Symfony Console Application.')
     ->setCode(function (InputInterface $input, OutputInterface $output) {
-        $dump = array();
         $shell = $input->getOption('shell');
         $script = $input->getArgument('script');
 
+        if (!in_array($shell, array('bash', 'zsh'))) {
+            throw new InvalidArgumentException(sprintf(
+                'Completion is only available for Bash and Zsh, "%s" given.',
+                $shell
+            ));
+        }
+
+        /* =====================================
+         * DEFAULT SCRIPT
+         * ===========================================
+         */
         if (!$script) {
             if ($input->getOption('disable-default-tools')) {
                 $tools = array();
@@ -101,18 +121,36 @@ $command
             return;
         }
 
+        /* =====================================
+         * STATIC SCRIPT
+         * ===========================================
+         */
         $scriptOptions = $input->getOption('script-options');
 
         // find all commands
-        $process = new Process($script.' '.$scriptOptions.' list --raw | sed -E "s/([^ ]+) .*/\1/"');
+        $process = new Process($script.' '.$scriptOptions.' list --raw | awk \'{if (NF>1) print $1 " " substr($0, index($0,$2)); else print $1}\'');
         $process->run();
         if (!$process->isSuccessful()) {
             throw new RuntimeException($process->getErrorOutput());
         }
 
-        $commands = explode("\n", $process->getOutput());
-        array_pop($commands);
+        $rawCommands = explode("\n", $process->getOutput());
+        array_pop($rawCommands);
 
+        $commands = array();
+        $commandsDescriptions = array();
+        $commandsOptionsDescriptions = array();
+        foreach ($rawCommands as $rawCommand) {
+            $rawCommand = explode(' ', $rawCommand, 2);
+            $commands[] = $rawCommand[0];
+            $commandsDescriptions[$rawCommand[0]] = !empty($rawCommand[1]) ? $rawCommand[1] : null;
+            $commandsOptionsDescriptions[$rawCommand[0]] = array();
+        }
+
+        // find all options
+        $commandsOptions = array();
+        $globalOptions = array();
+        $optionsDescriptions = array();
         foreach ($commands as $command) {
             // get command help as xml
             $process = new Process($script.' '.$scriptOptions.' help --format=xml '.$command);
@@ -123,51 +161,60 @@ $command
             $xmlHelp = $process->getOutput();
 
             // extract options from xml help
-            $options = array();
+            $commandOptions = array();
             $xml = simplexml_load_string($xmlHelp);
-            foreach ($xml->xpath('/command/options/option') as $option) {
-                $options[] = (string) $option['name'];
+            foreach ($xml->xpath('/command/options/option') as $commandOption) {
+                $name = (string) $commandOption['name'];
+                $commandOptions[] = $name;
+                $optionsDescriptions[$name] = $commandsOptionsDescriptions[$command][$name] = (string) $commandOption->description;
             }
 
-            $dump[$command] = $options;
-        }
+            $commandsOptions[$command] = $commandOptions;
+            if ('list' !== $command) {
+                if (empty($globalOptions)) {
+                    $globalOptions = $commandOptions;
+                }
 
-        // extract options shared between all commands
-        $commonOptions = array();
-        foreach ($dump as $command => $options) {
-            if (empty($commonOptions)) {
-                $commonOptions = $options;
+                $globalOptions = array_intersect($globalOptions, $commandOptions);
             }
-
-            $commonOptions = array_intersect($commonOptions, $options);
         }
 
-        $dump = array_map(function($options) use ($commonOptions) {
-            return array_diff($options, $commonOptions);
-        }, $dump);
+        if ('zsh' == $shell) {
+            $switchCaseStatementTemplate = 'opts+=(%%COMMAND_OPTIONS%%)';
+        } else {
+            $switchCaseStatementTemplate = 'opts="${opts} %%COMMAND_OPTIONS%%"';
+        }
 
         // generate the switch content
-        $switchCase = <<<SWITCHCASE
+        $switchCaseTemplate = <<<SWITCHCASE
     %%COMMAND%%)
-            opts="\${opts} %%COMMAND_OPTIONS%%"
+            $switchCaseStatementTemplate
             ;;
 SWITCHCASE;
+
         $switchContent = '';
-        foreach ($dump as $command => $options) {
+        foreach ($commandsOptions as $command => $options) {
             if (empty($options)) {
                 continue;
+            }
+
+            $options = array_diff($options, $globalOptions);
+            if ('zsh' === $shell) {
+                $options = array_map(function ($option) use ($command, $commandsOptionsDescriptions) {
+                    return zsh_describe($option, $commandsOptionsDescriptions[$command][$option]);
+                }, $options);
             }
 
             $switchContent .= str_replace(
                 array('%%COMMAND%%', '%%COMMAND_OPTIONS%%'),
                 array($command, join(' ', $options)),
-                $switchCase
+                $switchCaseTemplate
             )."\n        ";
         }
         $switchContent = rtrim($switchContent, ' ');
 
         // dump
-        $template = file_get_contents(__DIR__.'/templates/cached.bash.tpl');
+        $template = file_get_contents(__DIR__.'/templates/cached.'.$shell.'.tpl');
         $script = explode('/', $script);
         $script = array_pop($script);
         $tools = array($script);
@@ -177,13 +224,27 @@ SWITCHCASE;
             $tools = array_unique(array_merge($tools, $extraTools));
         }
 
-        $tools = array_map(function ($v) use ($script) {
-            return 'complete -o default -F _'.$script.' '.$v;
-        }, $tools);
+        if ('zsh' == $shell) {
+            $commands = array_map(function ($command) use ($commandsDescriptions) {
+                return zsh_describe($command, $commandsDescriptions[$command]);
+            }, $commands);
+
+            $globalOptions = array_map(function ($option) use ($optionsDescriptions) {
+                return zsh_describe($option, $optionsDescriptions[$option]);
+            }, $globalOptions);
+
+            $tools = array_map(function ($v) use ($script) {
+                return "compdef _$script $v";
+            }, $tools);
+        } else {
+            $tools = array_map(function ($v) use ($script) {
+                return "complete -o default -F _$script $v";
+            }, $tools);
+        }
 
         $output->write(str_replace(
             array('%%SCRIPT%%', '%%COMMANDS%%', '%%SHARED_OPTIONS%%', '%%SWITCH_CONTENT%%', '%%TOOLS%%'),
-            array($script, join(' ', $commands), join(' ', $commonOptions), $switchContent, implode("\n", $tools)),
+            array($script, join(' ', $commands), join(' ', $globalOptions), $switchContent, implode("\n", $tools)),
             $template
         ));
     })

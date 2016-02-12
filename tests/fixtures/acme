@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/../../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputOption;
+
+$command1 = new Command('hello');
+$command1
+    ->setDescription('Complete me please.')
+    ->setDefinition(array(
+        new InputOption('dangerous-option', null, InputOption::VALUE_REQUIRED, 'This $hould be `escaped`.'),
+        new InputOption('option-without-description'),
+    ))
+;
+
+$command2 = new Command('command:with:colons');
+$command2
+    ->setDefinition(array(
+        new InputOption('goodbye'),
+    ))
+;
+
+$application = new Application();
+$application->add($command1);
+$application->add($command2);
+$application->run();

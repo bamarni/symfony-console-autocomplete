@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-_%%SCRIPT%%()
+_acme()
 {
     local cur script coms opts com
     COMPREPLY=()
@@ -23,10 +23,22 @@ _%%SCRIPT%%()
 
     # completing for an option
     if [[ ${cur} == --* ]] ; then
-        opts="%%SHARED_OPTIONS%%"
+        opts="--help --quiet --verbose --version --ansi --no-ansi --no-interaction"
 
         case "$com" in
-        %%SWITCH_CONTENT%%
+            hello)
+            opts="${opts} --dangerous-option --option-without-description"
+            ;;
+            help)
+            opts="${opts} --xml --format --raw"
+            ;;
+            list)
+            opts="${opts} --xml --raw --format"
+            ;;
+            command:with:colons)
+            opts="${opts} --goodbye"
+            ;;
+
         esac
 
         COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
@@ -37,7 +49,7 @@ _%%SCRIPT%%()
 
     # completing for a command
     if [[ $cur == $com ]]; then
-        coms="%%COMMANDS%%"
+        coms="hello help list command:with:colons"
 
         COMPREPLY=($(compgen -W "${coms}" -- ${cur}))
         __ltrim_colon_completions "$cur"
@@ -46,4 +58,4 @@ _%%SCRIPT%%()
     fi
 }
 
-%%TOOLS%%
+complete -o default -F _acme acme
