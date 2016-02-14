@@ -25,7 +25,7 @@ Add the following line at the end of your shell configuration file (`~/.bash_pro
 
 Close / re-open your terminal window and you're ready to go!
 
-### Static setup
+## Static setup
 
 If you don't like all the magic from the quick setup and want to go with a more standard way,
 you can dump a static completion file for a given tool :

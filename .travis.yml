@@ -21,3 +21,6 @@ install:
 script:
   - bats --version
   - bats tests
+
+notifications:
+  email: false
