@@ -16,12 +16,6 @@ See https://getcomposer.org/doc/03-cli.md#global for instructions on how todo th
 Install the tool globally with Composer :
 
     composer global require bamarni/symfony-console-autocomplete
-    
-## Update
-
-To update the tool to a new version use
-
-    composer global update bamarni/symfony-console-autocomplete
 
 ## Quick setup (recommended)
 
@@ -51,6 +45,12 @@ at a specific location depending on your OS / setup. Here are a few examples :
     symfony-autocomplete composer > ~/.composer_completion && echo "source ~/.composer_completion" >> ~/.zshrc
 
 ## General tips
+
+### Update
+
+To update the tool to a new version use :
+
+    composer global update bamarni/symfony-console-autocomplete
 
 ### Symfony framework completion
 
