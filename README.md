@@ -1,7 +1,7 @@
 # Symfony console autocomplete [![Build Status](https://travis-ci.org/bamarni/symfony-console-autocomplete.svg?branch=master)](https://travis-ci.org/bamarni/symfony-console-autocomplete)
 
 Enables shell autocompletion for tools based on the
-[Symfony2 Console](http://symfony.com/doc/master/components/console/introduction.html) 
+[Symfony Console](http://symfony.com/doc/master/components/console/introduction.html) 
 (Symfony framework, Composer, PHPSpec, Behat, etc.)
 
 <img src="https://cloud.githubusercontent.com/assets/1205386/12221229/ecbda408-b791-11e5-8b2f-524763250a53.png" />
@@ -44,6 +44,13 @@ at a specific location depending on your OS / setup. Here are a few examples :
     # ZSH - Config file
     symfony-autocomplete composer > ~/.composer_completion && echo "source ~/.composer_completion" >> ~/.zshrc
 
+## General tips
+
+### Symfony framework completion
+
+In order to get completion running, you shouldn't prepend `php` at the begining of the command :
+
+    app/console [TAB]
 
 ## Tips for Bash users
 
