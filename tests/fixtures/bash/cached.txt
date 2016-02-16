@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 _acme()
 {
     local cur script coms opts com

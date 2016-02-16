@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-
 _symfony()
 {
     local state com cur commands options

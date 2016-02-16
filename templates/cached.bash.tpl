@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 _%%SCRIPT%%()
 {
     local cur script coms opts com

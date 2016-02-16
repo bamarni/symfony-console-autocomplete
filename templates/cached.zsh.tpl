@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-
 _%%SCRIPT%%()
 {
     local state com cur

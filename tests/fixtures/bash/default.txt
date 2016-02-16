@@ -1,5 +1,3 @@
-#!/bin/bash
-
 _symfony()
 {
     local cur script com opts
