@@ -1,3 +1,5 @@
+#compdef acme
+
 _acme()
 {
     local state com cur

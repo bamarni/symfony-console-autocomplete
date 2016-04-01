@@ -1,3 +1,5 @@
+#compdef %%SCRIPT%%
+
 _%%SCRIPT%%()
 {
     local state com cur
