@@ -9,6 +9,7 @@ Enables shell autocompletion for tools based on the
 ## Prerequisites
 
 Make sure the global composer project is configured properly with your shell.
+Notably, the composer global bin directory needs to be in your path.
 See https://getcomposer.org/doc/03-cli.md#global for instructions on how todo that.
 
 ## Installation
@@ -16,8 +17,6 @@ See https://getcomposer.org/doc/03-cli.md#global for instructions on how todo th
 Install the tool globally with Composer :
 
     composer global require bamarni/symfony-console-autocomplete
-
-Make sure that the [composer global bin directory is in your path](https://getcomposer.org/doc/03-cli.md#global).
 
 ## Quick setup (recommended)
 
