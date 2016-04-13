@@ -16,7 +16,7 @@ See https://getcomposer.org/doc/03-cli.md#global for instructions on how todo th
 
 You should add to your ~/.profile 
 ```
-PATH="$PATH:$COMPOSER_HOME/vendor/bin"
+export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
 ```
 
 ## Installation
