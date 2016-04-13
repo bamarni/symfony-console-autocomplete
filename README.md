@@ -12,6 +12,13 @@ Make sure the global composer project is configured properly with your shell.
 Notably, the composer global bin directory needs to be in your path.
 See https://getcomposer.org/doc/03-cli.md#global for instructions on how todo that.
 
+## Adding composer global bin to path on Ubuntu
+
+You should add to your ~/.profile 
+```
+PATH="$PATH:$COMPOSER_HOME/vendor/bin"
+```
+
 ## Installation
 
 Install the tool globally with Composer :
