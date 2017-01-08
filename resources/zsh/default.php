@@ -31,4 +31,7 @@ _symfony()
     esac
 }
 
-%%TOOLS%%
+<?php foreach ($vars['tools'] as $tool): ?>
+compdef _symfony <?php echo $tool ?>
+
+<?php endforeach; ?>

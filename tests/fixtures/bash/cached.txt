@@ -24,15 +24,19 @@ _acme()
         opts="--help --quiet --verbose --version --ansi --no-ansi --no-interaction"
 
         case "$com" in
+
             hello)
             opts="${opts} --dangerous-option --option-without-description"
             ;;
+
             help)
             opts="${opts} --xml --format --raw"
             ;;
+
             list)
             opts="${opts} --xml --raw --format"
             ;;
+
             command:with:colons)
             opts="${opts} --goodbye"
             ;;

@@ -1,6 +1,6 @@
-_symfony()
+_<?php echo $vars['script'] ?>()
 {
-    local cur script com opts
+    local cur script coms opts com
     COMPREPLY=()
     _get_comp_words_by_ref -n : cur words
 
@@ -21,25 +21,36 @@ _symfony()
 
     # completing for an option
     if [[ ${cur} == --* ]] ; then
-        opts=$script
-        [[ -n $com ]] && opts=$opts" -h "$com
-        opts=$($opts --no-ansi 2>/dev/null | sed -n '/Options/,/^$/p' | sed -e '1d;$d' | sed 's/[^--]*\(--.*\)/\1/' | sed -En 's/[^ ]*(-(-[[:alnum:]]+){1,}).*/\1/p' | awk '{$1=$1};1'; exit ${PIPESTATUS[0]});
-        [[ $? -eq 0 ]] || return 0;
+        opts="<?php echo join(' ', $vars['options_global']) ?>"
+
+        case "$com" in
+<?php foreach ($vars['options_command'] as $command => $options): ?>
+
+            <?php echo $command ?>)
+            opts="${opts} <?php echo join(' ', array_diff($options, $vars['options_global'])) ?>"
+            ;;
+<?php endforeach; ?>
+
+        esac
+
         COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-        __ltrim_colon_completions "$cur"
-
-        return 0
-    fi
-
-    # completing for a command
-    if [[ $cur == $com ]]; then
-        coms=$($script list --raw 2>/dev/null | awk '{print $1}'; exit ${PIPESTATUS[0]})
-        [[ $? -eq 0 ]] || return 0;
-        COMPREPLY=($(compgen -W "${coms}" -- ${cur}))
         __ltrim_colon_completions "$cur"
 
         return 0;
     fi
+
+    # completing for a command
+    if [[ $cur == $com ]]; then
+        coms="<?php echo join(' ', $vars['commands']) ?>"
+
+        COMPREPLY=($(compgen -W "${coms}" -- ${cur}))
+        __ltrim_colon_completions "$cur"
+
+        return 0
+    fi
 }
 
-%%TOOLS%%
+<?php foreach ($vars['tools'] as $tool): ?>
+complete -o default -F _<?php echo $vars['script'] ?> <?php echo $tool ?>
+
+<?php endforeach; ?>

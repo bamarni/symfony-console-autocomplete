@@ -15,7 +15,7 @@ install:
   - git clone https://github.com/sstephenson/bats.git /tmp/bats
   - mkdir -p /tmp/local
   - bash /tmp/bats/install.sh /tmp/local
-  - export PATH=$PWD:/tmp/local/bin:$PWD/tests/fixtures:$PATH
+  - export PATH=$PWD/bin:/tmp/local/bin:$PWD/tests/fixtures:$PATH
   - composer update $COMPOSER_OPTIONS
 
 script:
