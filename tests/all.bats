@@ -5,7 +5,7 @@
 
   echo "$output"
 
-  [[ "$output" == *"Completion is only available for Bash and Zsh"* ]] || false
+  [[ "$output" == *"Completion is only available for Bash, Fish and Zsh"* ]] || false
 
   [ "$status" -ne 0 ]
 }

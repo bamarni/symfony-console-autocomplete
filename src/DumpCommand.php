@@ -20,7 +20,7 @@ class DumpCommand extends Command
                 new InputOption('script-options', null, InputOption::VALUE_REQUIRED, "Options to be passed to the script."),
                 new InputOption('aliases', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, "Extra aliases to be used."),
                 new InputOption('disable-default-tools', null, InputOption::VALUE_NONE),
-                new InputOption('shell', null, InputOption::VALUE_REQUIRED, 'Shell type ("bash" or "zsh")', basename($_SERVER['SHELL'])),
+                new InputOption('shell', null, InputOption::VALUE_REQUIRED, 'Shell type ("bash", "fish" or "zsh")', basename($_SERVER['SHELL'])),
             ))
             ->setDescription('Dumps shell autocompletion for any executable based on a Symfony Console Application.')
         ;
@@ -31,9 +31,9 @@ class DumpCommand extends Command
         $shell = $input->getOption('shell');
         $script = $input->getArgument('script');
 
-        if (!in_array($shell, array('bash', 'zsh'))) {
+        if (!in_array($shell, array('bash', 'zsh', 'fish'))) {
             throw new \InvalidArgumentException(sprintf(
-                'Completion is only available for Bash and Zsh, "%s" given.',
+                'Completion is only available for Bash, Fish and Zsh, "%s" given.',
                 $shell
             ));
         }

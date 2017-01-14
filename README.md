@@ -46,6 +46,9 @@ at a specific location depending on your OS / setup. Here are a few examples :
     # ZSH - Config file
     symfony-autocomplete composer > ~/.composer_completion && echo "source ~/.composer_completion" >> ~/.zshrc
 
+    # FISH
+    symfony-autocomplete composer > ~/.config/fish/completions/composer.fish
+
 ## General tips
 
 ### Update
