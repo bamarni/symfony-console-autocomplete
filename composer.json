@@ -15,5 +15,8 @@
             "email": "bilal.amarni@gmail.com"
         }
     ],
-    "bin": [ "symfony-autocomplete" ]
+    "bin": [ "bin/symfony-autocomplete" ],
+    "autoload": {
+        "psr-4": { "Bamarni\\Symfony\\Console\\Autocomplete\\": "src/" }
+    }
 }

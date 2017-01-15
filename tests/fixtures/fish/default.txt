@@ -1,0 +1,1 @@
+# dynamic completion is not supported with fish

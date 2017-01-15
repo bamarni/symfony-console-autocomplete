@@ -1,0 +1,42 @@
+function __fish_acme_no_subcommand
+    for i in (commandline -opc)
+        if contains -- $i hello help list command:with:colons
+            return 1
+        end
+    end
+    return 0
+end
+
+# global options
+complete -c acme -n '__fish_acme_no_subcommand' -l help -d 'Display this help message'
+complete -c acme -n '__fish_acme_no_subcommand' -l quiet -d 'Do not output any message'
+complete -c acme -n '__fish_acme_no_subcommand' -l verbose -d 'Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug'
+complete -c acme -n '__fish_acme_no_subcommand' -l version -d 'Display this application version'
+complete -c acme -n '__fish_acme_no_subcommand' -l ansi -d 'Force ANSI output'
+complete -c acme -n '__fish_acme_no_subcommand' -l no-ansi -d 'Disable ANSI output'
+complete -c acme -n '__fish_acme_no_subcommand' -l no-interaction -d 'Do not ask any interactive question'
+
+# commands
+complete -c acme -f -n '__fish_acme_no_subcommand' -a hello -d 'Complete me please.'
+complete -c acme -f -n '__fish_acme_no_subcommand' -a help -d 'Displays help for a command'
+complete -c acme -f -n '__fish_acme_no_subcommand' -a list -d 'Lists commands'
+complete -c acme -f -n '__fish_acme_no_subcommand' -a command:with:colons -d ''
+
+# command options
+
+# hello
+complete -c acme -A -n '__fish_seen_subcommand_from hello' -l dangerous-option -d 'This $hould be `escaped`.'
+complete -c acme -A -n '__fish_seen_subcommand_from hello' -l option-without-description -d ''
+
+# help
+complete -c acme -A -n '__fish_seen_subcommand_from help' -l xml -d 'To output help as XML'
+complete -c acme -A -n '__fish_seen_subcommand_from help' -l format -d 'The output format (txt, xml, json, or md)'
+complete -c acme -A -n '__fish_seen_subcommand_from help' -l raw -d 'To output raw command help'
+
+# list
+complete -c acme -A -n '__fish_seen_subcommand_from list' -l xml -d 'To output list as XML'
+complete -c acme -A -n '__fish_seen_subcommand_from list' -l raw -d 'To output raw command list'
+complete -c acme -A -n '__fish_seen_subcommand_from list' -l format -d 'The output format (txt, xml, json, or md)'
+
+# command:with:colons
+complete -c acme -A -n '__fish_seen_subcommand_from command:with:colons' -l goodbye -d ''
