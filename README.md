@@ -19,7 +19,7 @@ Install the tool globally with Composer :
 
     composer global require bamarni/symfony-console-autocomplete
 
-## Quick setup (recommended)
+## Quick setup
 
 Add the following line at the end of your shell configuration file (`~/.bash_profile` or `~/.zshrc`) :
 
