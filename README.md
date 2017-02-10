@@ -23,7 +23,7 @@ Install the tool globally with Composer :
 
 Add the following line at the end of your shell configuration file (`~/.bash_profile` or `~/.zshrc`) :
 
-    eval "$(symfony-autocomplete)"
+    eval "$(/path/to/the/symfony-autocomplete)"
 
 Close / re-open your terminal window and you're ready to go!
 
