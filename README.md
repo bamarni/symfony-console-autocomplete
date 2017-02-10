@@ -13,6 +13,13 @@ Notably, the composer global bin directory needs to be in your path.
 See https://getcomposer.org/doc/03-cli.md#global for instructions on how todo that.
 * If you're using bash, you'll have to make sure [programmable completion functions](https://github.com/scop/bash-completion) are available. Linux distributions usually ship it and enable it by default. On Mac OSX, you can install it with brew (`brew install bash-completion`) and enable it by adding `source $(brew --prefix)/etc/bash_completion` at the end of your `.bashrc`.
 
+## Adding composer global bin to path on Ubuntu
+
+You should add to your ~/.profile 
+```
+export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
+```
+
 ## Installation
 
 Install the tool globally with Composer :
