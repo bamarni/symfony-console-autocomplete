@@ -81,3 +81,4 @@ here is a non-exhaustive list :
 * php-cs-fixer
 * behat
 * phpspec
+* robo

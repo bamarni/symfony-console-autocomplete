@@ -52,6 +52,7 @@ class DumpCommand extends Command
                     'php-cs-fixer',
                     'phpspec',
                     'behat',
+                    'robo',
                 );
             }
 
