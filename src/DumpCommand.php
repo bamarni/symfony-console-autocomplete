@@ -73,42 +73,29 @@ class DumpCommand extends Command
         $scriptOptions = $input->getOption('script-options');
 
         // find all commands
-        $process = new Process($script . ' ' . $scriptOptions . ' list --raw | awk \'{if (NF>1) print $1 " " substr($0, index($0,$2)); else print $1}\'');
+        $process = new Process($script . ' ' . $scriptOptions . ' list --format=xml');
         $process->run();
         if (!$process->isSuccessful()) {
             throw new \RuntimeException($process->getErrorOutput());
         }
 
-        $rawCommands = explode("\n", $process->getOutput());
-        array_pop($rawCommands);
+        $xmlCommands = $process->getOutput();
+        $xml = simplexml_load_string($xmlCommands);
 
         $commands = array();
         $commandsDescriptions = array();
         $commandsOptionsDescriptions = array();
-        foreach ($rawCommands as $rawCommand) {
-            $rawCommand = explode(' ', $rawCommand, 2);
-            $commands[] = $rawCommand[0];
-            $commandsDescriptions[$rawCommand[0]] = !empty($rawCommand[1]) ? $rawCommand[1] : null;
-            $commandsOptionsDescriptions[$rawCommand[0]] = array();
-        }
-
         // find all options
         $commandsOptions = array();
         $globalOptions = array();
         $optionsDescriptions = array();
-        foreach ($commands as $command) {
-            // get command help as xml
-            $process = new Process($script . ' ' . $scriptOptions . ' help --format=xml ' . $command);
-            $process->run();
-            if (!$process->isSuccessful()) {
-                throw new \RuntimeException($process->getErrorOutput());
-            }
-            $xmlHelp = $process->getOutput();
-
-            // extract options from xml help
+        foreach ($xml->xpath('/symfony/commands/command') as $xmlCommand) {
+            $command = (string) $xmlCommand['name'];
+            $commands[] = $command;
+            $commandsDescriptions[$command] = !empty($xmlCommand->description) ? $xmlCommand->description : null;
+            $commandsOptionsDescriptions[$command] = array();
             $commandOptions = array();
-            $xml = simplexml_load_string($xmlHelp);
-            foreach ($xml->xpath('/command/options/option') as $commandOption) {
+            foreach ($xmlCommand->xpath('options/option') as $commandOption) {
                 $name = (string)$commandOption['name'];
                 $commandOptions[] = $name;
                 $optionsDescriptions[$name] = $commandsOptionsDescriptions[$command][$name] = (string)$commandOption->description;
