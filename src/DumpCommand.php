@@ -92,7 +92,7 @@ class DumpCommand extends Command
         foreach ($xml->xpath('/symfony/commands/command') as $xmlCommand) {
             $command = (string) $xmlCommand['name'];
             $commands[] = $command;
-            $commandsDescriptions[$command] = !empty($xmlCommand->description) ? $xmlCommand->description : null;
+            $commandsDescriptions[$command] = !empty($xmlCommand->description) ? strip_tags($xmlCommand->description) : null;
             $commandsOptionsDescriptions[$command] = array();
             $commandOptions = array();
             foreach ($xmlCommand->xpath('options/option') as $commandOption) {
