@@ -4,7 +4,8 @@
     "license": "MIT",
     "require": {
         "symfony/console": "^2.5|3.*",
-        "symfony/process": "^2.3|3.*"
+        "symfony/process": "^2.3|3.*",
+        "ext-simplexml": "*"
     },
     "require-dev": {
         "symfony/console": "2.8.*"
