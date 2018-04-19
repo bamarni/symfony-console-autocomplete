@@ -73,7 +73,7 @@ class DumpCommand extends Command
         $scriptOptions = $input->getOption('script-options');
 
         // find all commands
-        $process = new Process($script . ' ' . $scriptOptions . ' --xml');
+        $process = new Process($script . ' ' . $scriptOptions . ' list --format=xml');
         $process->run();
         if (!$process->isSuccessful()) {
             throw new \RuntimeException($process->getErrorOutput());
