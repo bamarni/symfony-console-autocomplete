@@ -3,8 +3,8 @@
     "description": "Shell completion for Symfony Console based scripts",
     "license": "MIT",
     "require": {
-        "symfony/console": ">=2.5",
-        "symfony/process": ">=2.5",
+        "symfony/console": ">=2.5|^3|^4",
+        "symfony/process": ">=2.5|^3|^4",
         "ext-simplexml": "*"
     },
     "require-dev": {
