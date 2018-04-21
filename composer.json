@@ -13,7 +13,13 @@
     "authors": [
         {
             "name": "Bilal Amarni",
-            "email": "bilal.amarni@gmail.com"
+            "email": "bilal.amarni@gmail.com",
+            "role": "Lead developer"
+        },
+        {
+            "name": "Richard Quadling",
+            "email": "RQuadling@gmail.com",
+            "role": "Contributing developer"
         }
     ],
     "bin": [ "bin/symfony-autocomplete" ],
