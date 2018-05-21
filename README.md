@@ -76,6 +76,18 @@ By default, completion for your aliases won't be enabled. If you're using aliase
 
     symfony-autocomplete --aliases=c --aliases=pspec
 
+## Tips for Docker users
+
+### Defining the `SHELL` environment variable
+
+If you connect to your container using something similar to `docker exec -it container bash` then
+you may find that the completions cannot be built due to an inability to locate the `SHELL`
+environment variable. This has been reported in https://github.com/bamarni/symfony-console-autocomplete/issues/32
+
+A solution is to supply the `SHELL` environment variable as part of the `docker exec` command:
+
+    docker exec -e SHELL=bash -it container bash
+
 ## Supported tools
 
 All tools using the Symfony Console component are supported,
