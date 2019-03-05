@@ -53,6 +53,11 @@ at a specific location depending on your OS / setup. Here are a few examples :
     # FISH
     symfony-autocomplete composer > ~/.config/fish/completions/composer.fish
 
+If you are running an environment that does not have automatic execution of PHP scripts, then you will need to
+call PHP and the script in question :
+
+    symfony-autocomplete "php ./artisan"
+
 ## General tips
 
 ### Update
