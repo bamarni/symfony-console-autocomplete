@@ -103,3 +103,5 @@ here is a non-exhaustive list :
 * behat
 * phpspec
 * robo
+* deployer
+* laravel's artisan
