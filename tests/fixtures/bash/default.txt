@@ -48,3 +48,5 @@ complete -o default -F _symfony php-cs-fixer
 complete -o default -F _symfony phpspec
 complete -o default -F _symfony behat
 complete -o default -F _symfony robo
+complete -o default -F _symfony dep
+complete -o default -F _symfony artisan

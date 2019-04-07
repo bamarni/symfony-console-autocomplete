@@ -53,6 +53,8 @@ class DumpCommand extends Command
                     'phpspec',
                     'behat',
                     'robo',
+                    'dep',
+                    'artisan',
                 );
             }
 
