@@ -20,7 +20,7 @@ class DumpCommand extends Command
                 new InputOption('script-options', null, InputOption::VALUE_REQUIRED, "Options to be passed to the script."),
                 new InputOption('aliases', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, "Extra aliases to be used."),
                 new InputOption('disable-default-tools', null, InputOption::VALUE_NONE),
-                new InputOption('shell', null, InputOption::VALUE_REQUIRED, 'Shell type ("bash", "fish" or "zsh")', isset($_SERVER['SHELL']) ? basename($_SERVER['SHELL']) : null),
+                new InputOption('shell', null, InputOption::VALUE_REQUIRED, 'Shell type ("bash", "fish" or "zsh")', isset($_SERVER['SHELL']) ? basename($_SERVER['SHELL'], '.exe') : null),
             ))
             ->setDescription('Dumps shell autocompletion for any executable based on a Symfony Console Application.')
         ;
