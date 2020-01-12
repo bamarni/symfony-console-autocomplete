@@ -55,6 +55,7 @@ class DumpCommand extends Command
                     'robo',
                     'dep',
                     'artisan',
+                    'roadiz',
                 );
             }
 
