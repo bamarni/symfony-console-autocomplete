@@ -2,6 +2,8 @@
 
 namespace Bamarni\Symfony\Console\Autocomplete;
 
+use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,13 +28,13 @@ class DumpCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $shell = $input->getOption('shell');
         $script = $input->getArgument('script');
 
         if (!in_array($shell, array('bash', 'zsh', 'fish'))) {
-            throw new \InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Completion is only available for Bash, Fish and Zsh, "%s" given.',
                 $shell
             ));
@@ -66,7 +68,7 @@ class DumpCommand extends Command
 
             $output->write($this->render($shell . '/default', compact('tools')));
 
-            return;
+            return 0;
         }
 
         /* =====================================
@@ -76,10 +78,17 @@ class DumpCommand extends Command
         $scriptOptions = $input->getOption('script-options');
 
         // find all commands
-        $process = new Process($script . ' list ' . $scriptOptions . ' --format=xml');
+        $command = $script . ' list ' . $scriptOptions . ' --format=xml';
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            // Symfony 4+
+            $process = Process::fromShellCommandline($command);
+        } else {
+            // old Symfony way
+            $process = new Process($command);
+        }
         $process->run();
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
+            throw new RuntimeException($process->getErrorOutput());
         }
 
         $xmlCommands = $process->getOutput();
@@ -133,6 +142,8 @@ class DumpCommand extends Command
             'commands_options_descriptions' => $commandsOptionsDescriptions,
             'tools' => $tools,
         )));
+
+        return 0;
     }
 
     private function render($template, $vars)
