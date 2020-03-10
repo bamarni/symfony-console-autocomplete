@@ -1,11 +1,11 @@
-# Symfony console autocomplete 
+# Symfony console autocomplete
 
 [![Travis Status](https://travis-ci.org/bamarni/symfony-console-autocomplete.svg?branch=master)](https://travis-ci.org/bamarni/symfony-console-autocomplete)
 [![Latest Stable Version](https://poser.pugx.org/bamarni/symfony-console-autocomplete/version.png)](https://packagist.org/packages/bamarni/symfony-console-autocomplete)
 [![Total Downloads](https://poser.pugx.org/bamarni/symfony-console-autocomplete/d/total.png)](https://packagist.org/packages/bamarni/symfony-console-autocomplete)
 
 Enables shell autocompletion for tools based on the
-[Symfony Console](http://symfony.com/doc/master/components/console/introduction.html) 
+[Symfony Console](http://symfony.com/doc/master/components/console/introduction.html)
 (Symfony framework, Composer, PHPSpec, Behat, etc.)
 
 <img src="https://cloud.githubusercontent.com/assets/1205386/12221229/ecbda408-b791-11e5-8b2f-524763250a53.png" />
