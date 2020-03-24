@@ -51,3 +51,4 @@ complete -o default -F _symfony robo
 complete -o default -F _symfony dep
 complete -o default -F _symfony artisan
 complete -o default -F _symfony roadiz
+complete -o default -F _symfony magento

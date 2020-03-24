@@ -106,3 +106,4 @@ here is a non-exhaustive list :
 * deployer
 * laravel's artisan
 * roadiz
+* magento 2 console
