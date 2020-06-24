@@ -58,6 +58,7 @@ class DumpCommand extends Command
                     'dep',
                     'artisan',
                     'roadiz',
+                    'magento',
                 );
             }
 
