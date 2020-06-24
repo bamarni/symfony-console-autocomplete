@@ -1,8 +1,16 @@
 # Symfony console autocomplete
 
-[![Travis Status](https://travis-ci.org/bamarni/symfony-console-autocomplete.svg?branch=master)](https://travis-ci.org/bamarni/symfony-console-autocomplete)
-[![Latest Stable Version](https://poser.pugx.org/bamarni/symfony-console-autocomplete/version.png)](https://packagist.org/packages/bamarni/symfony-console-autocomplete)
-[![Total Downloads](https://poser.pugx.org/bamarni/symfony-console-autocomplete/d/total.png)](https://packagist.org/packages/bamarni/symfony-console-autocomplete)
+[![Build Status](https://img.shields.io/travis/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&logo=travis)](https://travis-ci.org/bamarni/symfony-console-autocomplete)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&logo=scrutinizer)](https://scrutinizer-ci.com/g/bamarni/symfony-console-autocomplete/)
+[![GitHub issues](https://img.shields.io/github/issues/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&logo=github)](https://github.com/bamarni/symfony-console-autocomplete/issues)
+
+[![PHP Version](https://img.shields.io/packagist/php-v/bamarni/symfony-console-autocomplete.svg?style=for-the-badge)](https://github.com/bamarni/symfony-console-autocomplete)
+[![Stable Version](https://img.shields.io/packagist/v/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&label=Latest)](https://packagist.org/packages/bamarni/symfony-console-autocomplete)
+
+[![Total Downloads](https://img.shields.io/packagist/dt/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&label=Total+downloads)](https://packagist.org/packages/bamarni/symfony-console-autocomplete)
+[![Monthly Downloads](https://img.shields.io/packagist/dm/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&label=Monthly+downloads)](https://packagist.org/packages/bamarni/symfony-console-autocomplete)
+[![Daily Downloads](https://img.shields.io/packagist/dd/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&label=Daily+downloads)](https://packagist.org/packages/bamarni/symfony-console-autocomplete)
+
 
 Enables shell autocompletion for tools based on the
 [Symfony Console](http://symfony.com/doc/master/components/console/introduction.html)
