@@ -3,9 +3,10 @@
     "description": "Shell completion for Symfony Console based scripts",
     "license": "MIT",
     "require": {
+        "php": "^7.0",
+        "ext-simplexml": "*",
         "symfony/console": "^2.5|^3|^4|^5",
-        "symfony/process": "^2.5|^3|^4|^5",
-        "ext-simplexml": "*"
+        "symfony/process": "^2.5|^3|^4|^5"
     },
     "require-dev": {
         "symfony/console": "2.8.*"
