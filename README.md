@@ -9,7 +9,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&label=Total+downloads)](https://packagist.org/packages/bamarni/symfony-console-autocomplete)
 [![Monthly Downloads](https://img.shields.io/packagist/dm/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&label=Monthly+downloads)](https://packagist.org/packages/bamarni/symfony-console-autocomplete)
 [![Daily Downloads](https://img.shields.io/packagist/dd/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&label=Daily+downloads)](https://packagist.org/packages/bamarni/symfony-console-autocomplete)
-
+[![Packagist Stars](https://img.shields.io/packagist/stars/bamarni/symfony-console-autocomplete?style=for-the-badge)](https://github.com/bamarni/symfony-console-autocomplete)
 
 Enables shell autocompletion for tools based on the
 [Symfony Console](http://symfony.com/doc/master/components/console/introduction.html)
