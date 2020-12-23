@@ -1,0 +1,46 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  travis-ci-migration:
+    name: PHP ${{ matrix.php-version }} - ${{ matrix.run-job }}
+    runs-on: ${{ matrix.machine }}
+    continue-on-error: ${{ matrix.experimental }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        machine: ['ubuntu-16.04']
+        php-version: ['7.0', '7.1', '7.2', '7.3', '7.4']
+        run-job: ['env.1', 'env.2']
+        experimental: [false]
+        include:
+          - machine: 'ubuntu-18.04'
+            php-version: '8.0'
+            run-job: 'env.1'
+            experimental: true
+          - machine: 'ubuntu-18.04'
+            php-version: '8.0'
+            run-job: 'env.2'
+            experimental: true
+          - machine: 'ubuntu-18.04'
+            php-version: '8.1'
+            run-job: 'env.1'
+            experimental: true
+          - machine: 'ubuntu-18.04'
+            php-version: '8.1'
+            run-job: 'env.2'
+            experimental: true
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+
+      - uses: ktomk/run-travis-yml@v1
+        with:
+          run-job: ${{ matrix.run-job }}
+          allow-failure: ${{ matrix.experimental }}
