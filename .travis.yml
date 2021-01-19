@@ -1,14 +1,12 @@
 language: php
 
-dist: trusty
-
 php:
   - 7.0
   - 7.1
   - 7.2
   - 7.3
   - 7.4
-  - 8.0
+  - 8.0snapshot
   - nightly
 
 env:
@@ -28,3 +26,8 @@ script:
 
 notifications:
   email: false
+
+jobs:
+  fast_finish: true
+  allow_failures:
+  - php: '8.0' # php 8.0 missing on travis <https://travis-ci.community/t/php-8-0-missing/10132>
