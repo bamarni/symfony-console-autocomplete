@@ -58,7 +58,7 @@ at a specific location depending on your OS / setup. Here are a few examples :
     symfony-autocomplete composer > ~/.composer_completion && echo "source ~/.composer_completion" >> ~/.zshrc
 
     # FISH
-    symfony-autocomplete composer > ~/.config/fish/completions/composer.fish
+    symfony-autocomplete composer --shell=fish > ~/.config/fish/completions/composer.fish
 
 If you are running an environment that does not have automatic execution of PHP scripts, then you will need to
 call PHP and the script in question :
