@@ -59,7 +59,7 @@ at a specific location depending on your OS / setup. Here are a few examples :
     symfony-autocomplete composer > ~/.composer_completion && echo "source ~/.composer_completion" >> ~/.zshrc
 
     # FISH
-    symfony-autocomplete composer --shell=fish > ~/.config/fish/completions/composer.fish
+    symfony-autocomplete --shell=fish composer > ~/.config/fish/completions/composer.fish
 
 If you are running an environment that does not have automatic execution of PHP scripts, then you will need to
 call PHP and the script in question :
@@ -76,7 +76,7 @@ To update the tool to a new version use :
 
 ### Symfony framework completion
 
-In order to get completion running, you shouldn't prepend `php` at the begining of the command :
+In order to get completion running, you shouldn't prepend `php` at the beginning of the command :
 
     app/console [TAB]
 
@@ -85,7 +85,7 @@ In order to get completion running, you shouldn't prepend `php` at the begining 
 ### Alias support
 
 By default, completion for your aliases won't be enabled. If you're using aliases
-(eg. "c" for "composer", "pspec" for "phpspec", etc.), you have to pass them explicitly :
+(e.g. "c" for "composer", "pspec" for "phpspec", etc.), you have to pass them explicitly :
 
     symfony-autocomplete --aliases=c --aliases=pspec
 
@@ -112,6 +112,6 @@ here is a non-exhaustive list :
 * phpspec
 * robo
 * deployer
-* laravel's artisan
+* laravel artisan
 * roadiz
 * magento 2 console
