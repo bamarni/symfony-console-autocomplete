@@ -1,7 +1,7 @@
 # Symfony console autocomplete
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/bamarni/symfony-console-autocomplete/CI.svg?style=for-the-badge&logo=github)
-[![GitHub issues](https://img.shields.io/github/issues/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&logo=github)](https://github.com/bamarni/symfony-console-autocomplete/issues)
+[![GitHub CI Status](https://img.shields.io/github/workflow/status/bamarni/symfony-console-autocomplete/CI.svg?style=for-the-badge&logo=github)](https://github.com/bamarni/symfony-console-autocomplete/actions/workflows/ci.yml)
+[![GitHub Issues](https://img.shields.io/github/issues/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&logo=github)](https://github.com/bamarni/symfony-console-autocomplete/issues)
 [![Build Status](https://img.shields.io/travis/bamarni/symfony-console-autocomplete.svg?style=for-the-badge&logo=travis)](https://travis-ci.org/bamarni/symfony-console-autocomplete)
 
 [![PHP Version](https://img.shields.io/packagist/php-v/bamarni/symfony-console-autocomplete.svg?style=for-the-badge)](https://github.com/bamarni/symfony-console-autocomplete)
