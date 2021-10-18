@@ -50,6 +50,7 @@ class DumpCommand extends Command
             } else {
                 $tools = array(
                     'console',
+                    'acli',
                     'composer',
                     'php-cs-fixer',
                     'phpspec',

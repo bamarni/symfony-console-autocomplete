@@ -43,6 +43,7 @@ _symfony()
 }
 
 complete -o default -F _symfony console
+complete -o default -F _symfony acli
 complete -o default -F _symfony composer
 complete -o default -F _symfony php-cs-fixer
 complete -o default -F _symfony phpspec
