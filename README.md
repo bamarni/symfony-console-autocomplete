@@ -108,13 +108,13 @@ Any tool using the Symfony Console component and default `console` entrypoint is
 
 Additionally, the following tools with custom-named entrypoints are supported:
 
-* composer
+* [Composer](https://getcomposer.org/)
 * [Acquia CLI (acli)](https://github.com/acquia/cli)
-* php-cs-fixer
-* behat
-* phpspec
-* robo
-* deployer
-* laravel artisan
-* roadiz
-* magento 2 console
+* [Behat](https://docs.behat.org/en/latest/)
+* [Deployer](https://deployer.org/)
+* [Laravel Artisan](https://laravel.com/docs/8.x/artisan)
+* [Magento 2 console](https://devdocs.magento.com/guides/v2.4/extension-dev-guide/cli-cmds/cli-howto.html)
+* [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
+* [phpspec](http://www.phpspec.net/en/stable/)
+* [Roadiz](https://www.roadiz.io/)
+* [Robo](https://github.com/consolidation/Robo)

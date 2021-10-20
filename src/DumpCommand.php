@@ -51,15 +51,15 @@ class DumpCommand extends Command
                 $tools = array(
                     'console',
                     'acli',
+                    'artisan',
+                    'behat',
                     'composer',
+                    'dep',
+                    'magento',
                     'php-cs-fixer',
                     'phpspec',
-                    'behat',
-                    'robo',
-                    'dep',
-                    'artisan',
                     'roadiz',
-                    'magento',
+                    'robo',
                 );
             }
 
