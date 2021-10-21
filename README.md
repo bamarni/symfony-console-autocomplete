@@ -109,9 +109,9 @@ All tools using the Symfony Console component are supported.
 
 However, [quick setup](#quick-setup) only works if the entrypoint is named `console` or in the following list of tools: 
 
-* [Composer](https://getcomposer.org/)
 * [Acquia CLI (acli)](https://github.com/acquia/cli)
 * [Behat](https://docs.behat.org/en/latest/)
+* [Composer](https://getcomposer.org/)
 * [Deployer](https://deployer.org/)
 * [Laravel Artisan](https://laravel.com/docs/8.x/artisan)
 * [Magento 2 console](https://devdocs.magento.com/guides/v2.4/extension-dev-guide/cli-cmds/cli-howto.html)
