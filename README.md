@@ -24,7 +24,6 @@ Enables shell autocompletion for tools based on the
 Notably, the composer global bin directory needs to be in your path.
 See https://getcomposer.org/doc/03-cli.md#global for instructions on how todo that.
 * If you're using bash, you'll have to make sure [programmable completion functions](https://github.com/scop/bash-completion) are available. Linux distributions usually ship it and enable it by default. On Mac OSX, you can install it with brew (`brew install bash-completion`) and enable it by adding `source $(brew --prefix)/etc/bash_completion` at the end of your `.bashrc`.
-* If you wish to use a Console-based tool with an entrypoint name something other than `console` (i.e. Composer), ensure it’s in the list of [supported tools](#supported-tools), or open a PR to add it to the list.
 
 ## Installation
 
@@ -39,6 +38,8 @@ Add the following line at the end of your shell configuration file (`~/.bash_pro
     eval "$(symfony-autocomplete)"
 
 Close / re-open your terminal window and you're ready to go!
+
+Note that quick setup only works for [supported tools](#supported-tools).
 
 ## Static setup
 
@@ -104,9 +105,9 @@ A solution is to supply the `SHELL` environment variable as part of the `docker 
 
 ## Supported tools
 
-Any tool using the Symfony Console component and default `console` entrypoint is supported.
+All tools using the Symfony Console component are supported.
 
-Additionally, the following tools with custom-named entrypoints are supported:
+However, [quick setup](#quick-setup) only works if the entrypoint is named `console` or in the following list of tools: 
 
 * [Composer](https://getcomposer.org/)
 * [Acquia CLI (acli)](https://github.com/acquia/cli)
