@@ -43,12 +43,13 @@ _symfony()
 }
 
 complete -o default -F _symfony console
+complete -o default -F _symfony acli
+complete -o default -F _symfony artisan
+complete -o default -F _symfony behat
 complete -o default -F _symfony composer
+complete -o default -F _symfony dep
+complete -o default -F _symfony magento
 complete -o default -F _symfony php-cs-fixer
 complete -o default -F _symfony phpspec
-complete -o default -F _symfony behat
-complete -o default -F _symfony robo
-complete -o default -F _symfony dep
-complete -o default -F _symfony artisan
 complete -o default -F _symfony roadiz
-complete -o default -F _symfony magento
+complete -o default -F _symfony robo

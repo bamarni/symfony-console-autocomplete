@@ -39,6 +39,8 @@ Add the following line at the end of your shell configuration file (`~/.bash_pro
 
 Close / re-open your terminal window and you're ready to go!
 
+Note that quick setup only works for [supported tools](#supported-tools).
+
 ## Static setup
 
 If you don't like all the magic from the quick setup and want to go with a more standard way,
@@ -103,15 +105,17 @@ A solution is to supply the `SHELL` environment variable as part of the `docker 
 
 ## Supported tools
 
-All tools using the Symfony Console component are supported,
-here is a non-exhaustive list :
+All tools using the Symfony Console component are supported.
 
-* composer
-* php-cs-fixer
-* behat
-* phpspec
-* robo
-* deployer
-* laravel artisan
-* roadiz
-* magento 2 console
+However, [quick setup](#quick-setup) only works if the entrypoint is named `console` or in the following list of tools: 
+
+* [Acquia CLI (acli)](https://github.com/acquia/cli)
+* [Behat](https://docs.behat.org/en/latest/)
+* [Composer](https://getcomposer.org/)
+* [Deployer](https://deployer.org/)
+* [Laravel Artisan](https://laravel.com/docs/8.x/artisan)
+* [Magento 2 console](https://devdocs.magento.com/guides/v2.4/extension-dev-guide/cli-cmds/cli-howto.html)
+* [php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
+* [phpspec](http://www.phpspec.net/en/stable/)
+* [Roadiz](https://www.roadiz.io/)
+* [Robo](https://github.com/consolidation/Robo)
