@@ -5,8 +5,8 @@
     "require": {
         "php": "^7.0|^8.0",
         "ext-simplexml": "*",
-        "symfony/console": "^2.5|^3|^4|^5|^6",
-        "symfony/process": "^2.5|^3|^4|^5|^6"
+        "symfony/console": "^2.5|^3|^4|^5",
+        "symfony/process": "^2.5|^3|^4|^5"
     },
     "require-dev": {
         "symfony/console": "2.8.*"
