@@ -16,7 +16,7 @@ Enables shell autocompletion for tools based on the
 [Symfony Console](http://symfony.com/doc/master/components/console/introduction.html)
 (Symfony framework, Composer, PHPSpec, Behat, etc.)
 
-<img src="https://cloud.githubusercontent.com/assets/1205386/12221229/ecbda408-b791-11e5-8b2f-524763250a53.png" />
+<img src="https://cloud.githubusercontent.com/assets/1205386/12221229/ecbda408-b791-11e5-8b2f-524763250a53.png" alt="screenshot of symfony-console-autocomplete in action: zsh autocompletion for composer (press tab two times)" />
 
 ## Prerequisites
 
