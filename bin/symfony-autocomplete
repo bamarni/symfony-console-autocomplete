@@ -1,6 +1,10 @@
 #!/usr/bin/env php
 <?php
 
+if (function_exists('ini_set')) {
+    // utility errors on standard error
+    ini_set('display_errors', 'stderr');
+}
 
 if (file_exists($autoload = __DIR__.'/../../../autoload.php')) {
     require_once $autoload;
