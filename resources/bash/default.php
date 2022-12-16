@@ -1,6 +1,6 @@
 _symfony()
 {
-    local cur script com opts
+    local cur script com opts words
     COMPREPLY=()
     _get_comp_words_by_ref -n : cur words
 
