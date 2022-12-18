@@ -1,6 +1,6 @@
 _<?php echo $vars['script'] ?>()
 {
-    local cur script coms opts com
+    local cur script coms opts com words
     COMPREPLY=()
     _get_comp_words_by_ref -n : cur words
 
