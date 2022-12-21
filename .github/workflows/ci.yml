@@ -11,30 +11,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        machine: ['ubuntu-18.04']
-        php-version: ['7.1', '7.2', '7.3', '7.4']
+        machine: ['ubuntu-20.04']
+        php-version: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
         run-job: ['env.1', 'env.2']
         experimental: [false]
         include:
-          - machine: 'ubuntu-18.04'
-            php-version: '8.0'
+          - machine: 'ubuntu-20.04'
+            php-version: '8.2'
             run-job: 'env.1'
             experimental: true
-          - machine: 'ubuntu-18.04'
-            php-version: '8.0'
-            run-job: 'env.2'
-            experimental: true
-          - machine: 'ubuntu-18.04'
-            php-version: '8.1'
-            run-job: 'env.1'
-            experimental: true
-          - machine: 'ubuntu-18.04'
-            php-version: '8.1'
+          - machine: 'ubuntu-20.04'
+            php-version: '8.2'
             run-job: 'env.2'
             experimental: true
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
