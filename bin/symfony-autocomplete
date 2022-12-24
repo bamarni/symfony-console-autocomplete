@@ -6,11 +6,27 @@ if (function_exists('ini_set')) {
     ini_set('display_errors', 'stderr');
 }
 
-if (file_exists($autoload = __DIR__.'/../../../autoload.php')) {
-    require_once $autoload;
-} else {
-    require_once __DIR__.'/../vendor/autoload.php';
-}
+(/* require vendor autoload file (Composer) */ static function () {
+    $includeIfExists = static function ($file) {
+        /** @noinspection UsingInclusionOnceReturnValueInspection intended */
+        return file_exists($file) ? include_once($file) : false;
+    };
+    if ((!$includeIfExists(
+                __DIR__ . '/../../../autoload.php'
+            ) &&
+            empty($_SERVER['COMPOSER_VENDOR_DIR'])) ||
+        (!$includeIfExists(
+                $_SERVER['COMPOSER_VENDOR_DIR'] . '/autoload.php'
+            ) &&
+            !$includeIfExists(
+                __DIR__ . '/../' . $_SERVER['COMPOSER_VENDOR_DIR'] .
+                '/autoload.php'
+            )
+        )
+    ) {
+        require_once __DIR__ . '/../vendor/autoload.php';
+    }
+})();
 
 use Bamarni\Symfony\Console\Autocomplete\Application;
 
