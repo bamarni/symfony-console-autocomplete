@@ -153,9 +153,16 @@ class DumpCommand extends Command
         $helpers = array(
             'zsh_describe' => function($value, $description = null) {
                 $value = '"'.str_replace(':', '\\:', $value);
+
+                // Temporarily replace " with something replaceable after escapeshellcmd
+                $description = str_replace('"', '__DOUBLE_QUOTE__', $description);
+
                 if (!empty($description)) {
                     $value .= ':'.escapeshellcmd($description);
                 }
+
+                // Restore and escape "
+                $value = str_replace('__DOUBLE_QUOTE__', '\"', $value);
 
                 return $value.'"';
             }
