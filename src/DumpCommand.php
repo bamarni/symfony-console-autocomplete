@@ -86,7 +86,7 @@ class DumpCommand extends Command
             $process = Process::fromShellCommandline($command);
         } else {
             // old Symfony way
-            $process = new Process($command);
+            $process = new Process(explode(' ', $command));
         }
         $process->run();
         if (!$process->isSuccessful()) {
