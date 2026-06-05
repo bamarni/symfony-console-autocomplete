@@ -27,6 +27,7 @@ complete -c acme -f -n '__fish_acme_no_subcommand' -a command:with:colons -d ''
 # hello
 complete -c acme -A -n '__fish_seen_subcommand_from hello' -l dangerous-option -d 'This $hould be `escaped`.'
 complete -c acme -A -n '__fish_seen_subcommand_from hello' -l option-without-description -d ''
+complete -c acme -A -n '__fish_seen_subcommand_from hello' -l option-with-ansi-codes -d 'I am GREEN!'
 
 # help
 complete -c acme -A -n '__fish_seen_subcommand_from help' -l xml -d 'To output help as XML'

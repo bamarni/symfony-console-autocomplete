@@ -30,7 +30,7 @@ _acme()
             case "$com" in
 
             hello)
-            opts+=("--dangerous-option:This \$hould be \`escaped\`." "--option-without-description")
+            opts+=("--dangerous-option:This \$hould be \`escaped\`." "--option-without-description" "--option-with-ansi-codes:I am GREEN!")
             ;;
 
             help)

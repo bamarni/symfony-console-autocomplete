@@ -94,6 +94,7 @@ class DumpCommand extends Command
         }
 
         $xmlCommands = $process->getOutput();
+        $sanitisedXmlCommands = preg_replace('/\x1b\[[0-9;]*m/', '', $xmlCommands);
         $xml = simplexml_load_string($xmlCommands);
 
         $commands = array();
