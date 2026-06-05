@@ -13,6 +13,7 @@ $command1
     ->setDefinition(array(
         new InputOption('dangerous-option', null, InputOption::VALUE_REQUIRED, 'This $hould be `escaped`.'),
         new InputOption('option-without-description'),
+        new InputOption('option-with-ansi-codes', null, InputOption::VALUE_NONE, 'I am [32mGREEN[0m!'),
     ))
 ;
 
